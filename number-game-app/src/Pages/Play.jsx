@@ -3,6 +3,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { generateArray, setArray } from '../Redux/User/action';
 import { useEffect } from 'react';
+import {useNavigate} from "react-router-dom";
 
 const finalSpaceCharacters = [
   {
@@ -33,8 +34,11 @@ const finalSpaceCharacters = [
 ]
 
 function Play() {
+  const navigate=useNavigate();
   const dispatch=useDispatch();
   const arr=useSelector((store)=>store.UserReducer.data);
+  const sortedArray=useSelector((store)=>store.UserReducer.sortedArray);
+  // console.log(sortedArray,arr)
 
   useEffect(() => {
     dispatch(generateArray());
@@ -42,12 +46,25 @@ function Play() {
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
-
+    // console.log(sorted_Array,sortArr)
+    // console.log(arr,sortArr)
     const items = Array.from(arr);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     // updateCharacters(items);
     dispatch(setArray(items))
+    check(items);
+  }
+  
+  const check=(items)=>{
+    for(let i=0;i<arr.length;i++){
+      console.log(sortedArray[i],items[i])
+      if(sortedArray[i].name!=items[i].name){
+        return;
+      }
+    }
+    alert("You Win");
+    navigate("/leaderboard");
   }
 
  

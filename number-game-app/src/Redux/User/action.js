@@ -20,23 +20,45 @@ const getError=()=>{
         type:types.GET_ERROR
     }
 }
+
+const getSortedRequest=()=>{
+    return {
+        type:types.GET_SORTED_REQUEST
+    }
+}
+
+const getSortedSuccess=(data)=>{
+    return {
+        type:types.GET_SORTED_SUCCESS,
+        payload:data
+    }
+}
+
+const getSortedError=()=>{
+    return {
+        type:types.GET_SORTED_ERROR
+    }
+}
+
 const generateArray=()=>(dispatch)=>{
     dispatch(getError())
     let arr=new Array(10);
     for(let i=0;i<arr.length;i++){
       let obj={
-        id:(Math.floor(Math.random()*100)+500),
+        id:(Math.floor(Math.random()*1000)+500),
         name:(Math.floor(Math.random() *-100) + 100)
       }
       arr[i]=obj
     }
+    const tempData=[...arr];
     dispatch(getSuccess(arr))
-    console.log(arr);
+    dispatch(sortedArray(tempData))
+    // console.log(arr);
     // return arr
   }
 
   const setArray=(arr)=>(dispatch)=>{
-    dispatch(getError())
+    dispatch(getRequest())
     if(arr.length>0){
         dispatch(getSuccess(arr));
     }else{
@@ -44,6 +66,18 @@ const generateArray=()=>(dispatch)=>{
     }
   }
 
+  const sortedArray=(data)=>(dispatch)=>{
+    // console.log(data)
+    data.sort((a,b)=>a.name-b.name)
+    // console.log(data)
+    dispatch(getSortedRequest());
+    if(data.length>0){
+        dispatch(getSortedSuccess(data));
+    }else{
+        dispatch(getSortedError());
+    }
+  }
 
 
-export {getError,getRequest,getSuccess,generateArray,setArray}
+
+export {getError,getRequest,getSuccess,generateArray,setArray,sortedArray}
