@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useDispatch, useSelector } from 'react-redux';
+import { generateArray, setArray } from '../Redux/User/action';
+import { useEffect } from 'react';
 
 const finalSpaceCharacters = [
   {
@@ -30,55 +33,49 @@ const finalSpaceCharacters = [
 ]
 
 function Play() {
-  let arr;
-  const [characters, updateCharacters] = useState(finalSpaceCharacters);
+  const dispatch=useDispatch();
+  const arr=useSelector((store)=>store.UserReducer.data);
+
+  useEffect(() => {
+    dispatch(generateArray());
+  }, []);
 
   function handleOnDragEnd(result) {
     if (!result.destination) return;
 
-    const items = Array.from(characters);
+    const items = Array.from(arr);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
-
-    updateCharacters(items);
+    // updateCharacters(items);
+    dispatch(setArray(items))
   }
 
-  const generateArray=()=>{
-    arr=new Array(10);
-    for(let i=0;i<arr.length;i++){
-      let obj={
-        id:Math.floor(Math.random()*101),
-        name:Math.floor(Math.random()*101)
-      }
-      arr[i]=obj
-    }
-    console.log(arr);
-  }
+ 
 
 
   return (
-    <div className="App">
+    <div className="App" >
       <header className="App-header">
         <h1>Final Space Characters</h1>
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId="characters">
+        <DragDropContext onDragEnd={handleOnDragEnd}> 
+          <Droppable droppableId="characters" direction="horizontal">
             {(provided) => (
-              <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-                {characters.map(({id, name, thumb}, index) => {
+              <div style={{display:"flex",justifyContent:"space-around",gap:"20px"}} className="characters" {...provided.droppableProps} ref={provided.innerRef}>
+                {arr.length>0&&arr.map(({id, name, thumb}, index) => {
                   return (
-                    <Draggable key={id} draggableId={id} index={index}>
+                    <Draggable key={id} draggableId={id.toString()} index={index}>
                       {(provided) => (
-                        <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                           <p>
                             { name }
                           </p>
-                        </li>
+                        </div>
                       )}
                     </Draggable>
                   );
                 })}
                 {provided.placeholder}
-              </ul>
+              </div>
             )}
           </Droppable>
         </DragDropContext>
