@@ -8,9 +8,11 @@ const LeaderBoard = () => {
     const [data,setdata]=useState([]);
 
     const getData=()=>{
-        axios.get("https://mock-server-app-2-3le7.onrender.com/scores")
+        axios.get("https://number-game-backend.onrender.com/scores")
         .then((res)=>{
-            // console.log(res)
+            console.log(res.data.sort((a,b)=>b.score-a.score))
+            
+            
             setdata(res.data)
         })
         .catch((err)=>console.log(err))
