@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { generateArray, setArray } from '../Redux/User/action';
 import { useEffect } from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
-import { useToast } from '@chakra-ui/react';
+import { useToast,Heading } from '@chakra-ui/react';
 
 function Play() {
   const navigate=useNavigate();
@@ -15,20 +15,37 @@ function Play() {
   // console.log(sortedArray,arr)
   const user=JSON.parse(localStorage.getItem("user"));
   const toast=useToast();
+  const [count, setCount] = useState(20);
+  const [min, setmin] = useState(0);
+  const timeref = useRef(null);
 
   useEffect(() => {
     dispatch(generateArray());
+    if(user.difficulty=="high"){
+      setCount(10);
+    }else if(user.difficulty=="medium"){
+      setCount(20);
+    }else{
+      setCount(30);
+    }
+    handlestart();
+    return ()=>{
+      handlereset();
+    }
   }, []);
 
-  const handleScore=()=>{
-    console.log(user)
+  const handleScore=(flag)=>{
     const payload=user;
-    if(user.difficulty=="low"){
-      payload.score=5;
-    }else if(user.difficulty=="medium"){
-      payload.score=7;
-    }else if(user.difficulty=="high"){
-      payload.score=10;
+    if(flag==false){
+      payload.score=0;
+    }else{
+      if(user.difficulty=="low"){
+        payload.score=5;
+      }else if(user.difficulty=="medium"){
+        payload.score=7;
+      }else if(user.difficulty=="high"){
+        payload.score=10;
+      }
     }
     console.log(payload)
     // axios.post(`https://number-game-backend.onrender.com/scores`,payload)
@@ -44,7 +61,7 @@ function Play() {
     // .catch((err)=>console.log(err));
     setTimeout(() => {
      navigate("/leaderboard");
-   }, 2000)
+   }, 3000)
   }
 
   function handleOnDragEnd(result) {
@@ -67,16 +84,44 @@ function Play() {
       }
     }
     // alert("You Win");
-    handleScore()
+    handleScore(true)
   }
 
- 
+  const handlereset = () => {
+    clearInterval(timeref.current);
+    timeref.current = null;
+    setCount(60);
+    setmin(0);
+  };
+
+  const handlestart = () => {
+    if (timeref.current != null) return;
+    timeref.current = setInterval(() => {
+      setCount((prev) => {
+        if (prev == 0) {
+          prev = 60;
+          setmin((p) => {
+            if (p == 0) {
+              // postresult();
+              console.log("Ended");
+              
+              handlereset();
+              handleScore(false);
+            }
+            return p - 0.5;
+          });
+        }
+        return prev - 1;
+      });
+    }, 1000);
+ }
 
 
   return (
     <div className="App" >
       <header className="App-header">
         <h1>Final Space Characters</h1>
+        <Heading mt="2%" >Your Counter: {count} </Heading>
         <DragDropContext onDragEnd={handleOnDragEnd}> 
           <Droppable droppableId="characters" direction="horizontal">
             {(provided) => (

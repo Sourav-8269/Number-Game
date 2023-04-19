@@ -4,6 +4,7 @@ import {useEffect} from "react";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useToast } from '@chakra-ui/react';
 const LeaderBoard = () => {
     const [data,setdata]=useState([]);
 
