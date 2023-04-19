@@ -31,8 +31,8 @@ function Play() {
       payload.score=10;
     }
     console.log(payload)
-    axios.post(`https://number-game-backend.onrender.com/scores`,payload)
-    .then((res)=>{
+    // axios.post(`https://number-game-backend.onrender.com/scores`,payload)
+    // .then((res)=>{
       toast({
         title: "Game Ended Successfully",
         status: "success",
@@ -40,8 +40,8 @@ function Play() {
         isClosable: true,
         position:"top"
       });
-    })
-    .catch((err)=>console.log(err));
+    // })
+    // .catch((err)=>console.log(err));
     setTimeout(() => {
      navigate("/leaderboard");
    }, 2000)
@@ -66,9 +66,8 @@ function Play() {
         return;
       }
     }
-    alert("You Win");
+    // alert("You Win");
     handleScore()
-    navigate("/leaderboard");
   }
 
  

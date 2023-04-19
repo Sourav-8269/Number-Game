@@ -12,9 +12,19 @@ const Home = () => {
     const toast=useToast();
 
     const handleAdd=()=>{
+      if(name==""||category==""){
+        toast({
+          title: "Please Enter All Fields",
+          status: "info",
+          duration: 2000,
+          isClosable: true,
+          position:"top"
+        });
+        return;
+      }
         const payload={name,difficulty:category};
-        axios.post(`https://number-game-backend.onrender.com/users`,payload)
-        .then((res)=>{
+        // axios.post(`https://number-game-backend.onrender.com/users`,payload)
+        // .then((res)=>{
             localStorage.setItem("user",JSON.stringify(payload))
             toast({
               title: "Game Started",
@@ -24,8 +34,8 @@ const Home = () => {
               position:"top"
             });
             navigate("/play")
-        })
-        .catch((err)=>console.log(err))
+        // })
+        // .catch((err)=>console.log(err))
     }
    
 
