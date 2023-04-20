@@ -4,6 +4,7 @@ import {useEffect} from "react";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import "../App.css";
 import { useToast } from '@chakra-ui/react';
 const LeaderBoard = () => {
     const [data,setdata]=useState([]);
@@ -22,17 +23,18 @@ const LeaderBoard = () => {
         getData()
     }, []);
   return (
-    <Container bg="#9DC4FB" maxW="full" h="1500px" mt={0} centerContent overflow="hidden">
+    <Container maxW="full" h="100vh" mt={5} centerContent overflow="hidden">
     <Box   bg="#02054B"
-    w="60%"
+    // w="80%"
+    w={["90%","80%","60%"]}
           color="white"
           borderRadius="lg"
           m={{ sm: 4, md: 16, lg: 10 }}
-          p={{ sm: 5, md: 5, lg: 16 }} >
+          p={{ sm: 1, md: 5, lg: 16 }} >
         <Heading size="lg" as="h3" fontWeight="400" p="1%">Leaderboard</Heading>  
             <Box p="4">
                {data&&data.map((el)=>(
-                <div key={el.id} style={{display:"flex",justifyContent:"space-around",fontSize:"20px"}} >
+                <div key={el.id} id="players" >
                     <p><b>{el.name}</b></p>
                     <p>{el.difficulty}</p>
                     <p>{el.score}</p>

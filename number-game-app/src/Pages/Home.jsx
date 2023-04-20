@@ -42,7 +42,7 @@ const Home = () => {
   return (
     <Box h="100vh"  >
         <Heading size="lg" as="h3" fontWeight="400" p="1%" mt="3%" >Welcome</Heading> 
-    <HStack w="40%" m="auto" mt="2%" mb="5%" boxShadow='lg' p="2%" rounded='md' bg={colorMode=="light"?"#ECC94B":"#822727"}>
+    <HStack w={["90%","60%","40%"]} m="auto" mt="2%" mb="5%" boxShadow='lg' p="2%" rounded='md' bg={colorMode=="light"?"#ECC94B":"#822727"}>
       <FormControl as="fieldset">
         <FormLabel as="legend" >Name</FormLabel>
         <Input  size='md' mb="2%" placeholder="Enter Name"  value={name} onChange={(e)=>setname(e.target.value)} />

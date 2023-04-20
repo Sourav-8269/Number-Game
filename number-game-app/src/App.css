@@ -14,8 +14,46 @@
   }
 }
 
+#number{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 50px;
+  font-weight: bolder;
+  /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+}
+.characters{
+  display: flex;
+  justify-content: space-around;
+  gap:20px;
+}
+#players{
+  display: flex;
+  justify-content: space-around;
+  font-size: 20px;
+}
+
+@media all and (min-width: 600px) and (max-width: 800px) {
+  #number{
+    font-size: 35px;
+  }
+  #players{
+    justify-content: space-between;
+  }
+}
+
+@media all and (min-width: 300px) and (max-width: 600px) {
+  #number{
+    font-size: 22px;
+    /* font-weight: lighter; */
+  }
+  .characters{
+   gap:10px;
+  }
+  #players{
+    justify-content: space-between;
+  }
+}
+
 .App-header {
-  background-color: #9DC4FB;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

@@ -5,7 +5,8 @@ import { generateArray, setArray } from '../Redux/User/action';
 import { useEffect } from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
-import { useToast,Heading } from '@chakra-ui/react';
+import { useToast,Heading,Box} from '@chakra-ui/react';
+import "../App.css"
 
 function Play() {
   const navigate=useNavigate();
@@ -60,7 +61,7 @@ function Play() {
     // })
     // .catch((err)=>console.log(err));
     setTimeout(() => {
-     navigate("/leaderboard");
+    //  navigate("/leaderboard");
    }, 3000)
   }
 
@@ -121,17 +122,17 @@ function Play() {
     <div className="App" >
       <header className="App-header">
         <h1>Final Space Characters</h1>
-        <Heading mt="2%" >Your Counter: {count} </Heading>
+       
         <DragDropContext onDragEnd={handleOnDragEnd}> 
           <Droppable droppableId="characters" direction="horizontal">
             {(provided) => (
-              <div style={{display:"flex",justifyContent:"space-around",gap:"20px"}} className="characters" {...provided.droppableProps} ref={provided.innerRef}>
+              <div id="mapped-numbers" className="characters" {...provided.droppableProps} ref={provided.innerRef}>
                 {arr.length>0&&arr.map(({id, name, thumb}, index) => {
                   return (
                     <Draggable key={id} draggableId={id.toString()} index={index}>
                       {(provided) => (
                         <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                          <p>
+                          <p id="number" >
                             { name }
                           </p>
                         </div>
@@ -144,6 +145,9 @@ function Play() {
             )}
           </Droppable>
         </DragDropContext>
+        <Box rounded="full" border="1px solid #7B341E" bg="#68D391" p="3%">
+            <Heading >{count} </Heading>
+        </Box>
       </header>
     </div>
   );
