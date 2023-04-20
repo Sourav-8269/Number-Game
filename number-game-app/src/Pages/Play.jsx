@@ -120,8 +120,7 @@ function Play() {
   return (
     <div className="App" >
       <header className="App-header">
-        <h1>Final Space Characters</h1>
-       
+      <Heading size="lg" as="h3" fontWeight="400" p="1%" m="1%" >Arrange all Numbers</Heading>         
         <DragDropContext onDragEnd={handleOnDragEnd}> 
           <Droppable droppableId="characters" direction="horizontal">
             {(provided) => (
