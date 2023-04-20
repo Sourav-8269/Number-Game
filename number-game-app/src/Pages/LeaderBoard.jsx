@@ -12,16 +12,15 @@ const LeaderBoard = () => {
     const getData=()=>{
         axios.get("https://number-game-backend.onrender.com/scores")
         .then((res)=>{
-            console.log(res.data.sort((a,b)=>b.score-a.score))
-            
-            
             setdata(res.data)
         })
         .catch((err)=>console.log(err))
     }
+    
     useEffect(() => {
         getData()
     }, []);
+
   return (
     <Container maxW="full" h="100vh" mt={5} centerContent overflow="hidden">
     <Box   bg="#02054B"

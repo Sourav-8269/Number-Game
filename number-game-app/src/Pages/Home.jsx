@@ -23,8 +23,8 @@ const Home = () => {
         return;
       }
         const payload={name,difficulty:category};
-        // axios.post(`https://number-game-backend.onrender.com/users`,payload)
-        // .then((res)=>{
+        axios.post(`https://number-game-backend.onrender.com/users`,payload)
+        .then((res)=>{
             localStorage.setItem("user",JSON.stringify(payload))
             toast({
               title: "Game Started",
@@ -34,8 +34,8 @@ const Home = () => {
               position:"top"
             });
             navigate("/play")
-        // })
-        // .catch((err)=>console.log(err))
+        })
+        .catch((err)=>console.log(err))
     }
    
 

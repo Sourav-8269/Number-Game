@@ -28,7 +28,7 @@
 #players{
   display: flex;
   justify-content: space-around;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 @media all and (min-width: 600px) and (max-width: 800px) {
@@ -50,6 +50,7 @@
   }
   #players{
     justify-content: space-between;
+    font-size: 20px;
   }
 }
 
